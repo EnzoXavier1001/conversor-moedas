@@ -1,5 +1,5 @@
 const showResult = document.querySelector('[data-result]')
-const optionSelected = document.querySelector('[data-option]').value
+const optionSelected = document.querySelector('[data-option]')
 
 let cotacao;
 let res;
@@ -8,7 +8,7 @@ function converter() {
     const amount = document.querySelector('[data-amount]').value
 
     if(amount != '') {
-        checkChosenOption(optionSelected, amount)
+        checkChosenOption(optionSelected.value, amount)
     } else {
         Swal.fire({
             icon: 'error',
@@ -21,22 +21,20 @@ function converter() {
 async function checkChosenOption(option, value) {
     switch(option) {
         case 'dolar':
-            cotacao = await fetchApi('https://economia.awesomeapi.com.br/json/last/USD-BRL')
-            const { high } = cotacao.USDBRL
-            res = high * value
-            showResult.textContent = ' ' + res.toFixed(2)
+            cotacao = await fetchApi('BRL-USD')
+            res = cotacao.BRLUSD.high * value
+            showResult.textContent = 'Valor em reais R$ ' + res.toFixed(2)
         break;
         case 'euro':
-            cotacao = await fetchApi('https://economia.awesomeapi.com.br/json/last/EUR-BRL')
-            high = cotacao.EURBRL
-            res = high * value
-            showResult.textContent = ' ' + res.toFixed(2)
+            cotacao = await fetchApi('BRL-EUR')
+            res = cotacao.BRLEUR.high * value
+            showResult.textContent = 'Valor em reais R$ ' + res.toFixed(2)
         break;
     }
 }
 
-async function fetchApi(URL) {
-   let response = await fetch(URL)
+async function fetchApi(currentQuote) {
+   let response = await fetch(`https://economia.awesomeapi.com.br/json/last/${currentQuote}`)
    let responseJson = await response.json()
 
    return responseJson
