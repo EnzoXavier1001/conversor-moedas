@@ -18,27 +18,27 @@ function converter() {
     }
 }
 
-async function checkChosenOption(opcao, valor) {
-    switch(opcao) {
+async function checkChosenOption(option, value) {
+    switch(option) {
         case 'dolar':
             cotacao = await fetchApi('https://economia.awesomeapi.com.br/json/last/USD-BRL')
             const { high } = cotacao.USDBRL
-            res = high * valor
+            res = high * value
             showResult.textContent = ' ' + res.toFixed(2)
         break;
         case 'euro':
             cotacao = await fetchApi('https://economia.awesomeapi.com.br/json/last/EUR-BRL')
             high = cotacao.EURBRL
-            res = high * valor
+            res = high * value
             showResult.textContent = ' ' + res.toFixed(2)
         break;
     }
 }
 
-async function fetchApi(req) {
-   let res = await fetch(req)
-   let resJson = await res.json()
+async function fetchApi(URL) {
+   let response = await fetch(URL)
+   let responseJson = await response.json()
 
-   return resJson
+   return responseJson
 }
 
