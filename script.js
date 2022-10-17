@@ -23,12 +23,12 @@ async function checkChosenOption(option, value) {
         case 'dolar':
             cotacao = await fetchApi('BRL-USD')
             res = cotacao.BRLUSD.high * value
-            showResult.textContent = 'Valor em reais R$ ' + res.toFixed(2)
+            showResult.textContent = 'Valor em dólar US$ ' + res.toFixed(2)
         break;
         case 'euro':
             cotacao = await fetchApi('BRL-EUR')
             res = cotacao.BRLEUR.high * value
-            showResult.textContent = 'Valor em reais R$ ' + res.toFixed(2)
+            showResult.textContent = 'Valor em euro €' + res.toFixed(2)
         break;
     }
 }
